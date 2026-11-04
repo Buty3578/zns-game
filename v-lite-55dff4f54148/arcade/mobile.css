@@ -1,0 +1,267 @@
+/* Compact play HUD. Task details live in the journal; the world stays visible. */
+:root{--hud-top:calc(max(12px,env(safe-area-inset-top)) + 62px)}
+.logo{display:block;line-height:1;flex:none;letter-spacing:0}
+.logo img{display:block;width:102px;height:58px;object-fit:contain;filter:drop-shadow(0 1px 5px #ffffff35)}
+.home h1{font-size:clamp(46px,7vw,92px);letter-spacing:-3px;line-height:1.02}
+.home h1 em{font-size:.84em;color:#a6c3ff}
+.header-actions{gap:8px}
+.quick-player{display:flex;align-items:center;height:44px;background:#18344cef;border:1px solid #bad7e982;border-radius:13px;pointer-events:auto;overflow:hidden}
+.quick-player button{height:44px;min-width:42px;border:0;background:transparent;color:#f0f5ff;cursor:pointer;padding:0 8px}
+.quick-player button:disabled{opacity:.45}
+.quick-player #quickMusic{font-size:19px;color:#d5ff93}
+.quick-player #nextMusic{font-size:32px;min-width:36px}
+.quick-player #musicOpen{display:flex;justify-content:center;flex-direction:column;align-items:flex-start;width:150px;min-width:0;padding:0 6px;text-align:left}
+#musicOpen small{font-size:7px;letter-spacing:1.2px;color:#abc7d8}
+#quickMusicName{display:block;width:100%;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.mission{top:var(--hud-top);width:310px;min-width:0;max-width:none;padding:10px 13px;border-radius:13px;background:#183b52de}
+.mission-brief{position:relative;display:block;width:100%;min-height:40px;border:0;padding:0 20px 0 0;background:transparent;color:#fff;text-align:left;cursor:pointer;pointer-events:auto}
+.mission-brief .eyebrow{display:block;font-size:8px;letter-spacing:1px;line-height:12px}
+.mission-brief #objective{display:block;font-size:15px;font-weight:800;line-height:21px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mission-more{position:absolute;right:0;top:8px;font-size:25px;color:#b1c9e5}
+.mission #objectiveHint,.mission .quest-progress{display:none}
+.mission .counters{height:18px;margin:4px 0 0;padding:0;border:0;gap:6px}
+.mission .counters b{font-size:13px}
+.mission .counters .coin-icon{font-size:18px}
+.mission .counters #tracksButton{display:none}
+.map-wrap{top:var(--hud-top);padding:0;pointer-events:auto;cursor:pointer;overflow:hidden}
+.map-wrap span{display:block;font:700 8px sans-serif;color:#eef6dc;letter-spacing:1px;padding:3px 0 5px}
+.journal-current{padding:13px 14px;background:#a2c2e417;border-radius:12px}
+.journal-current small{font-size:9px;letter-spacing:1px;color:#ccffa1}
+.journal-current h3{margin:7px 0;font-size:17px}
+.journal-current p{margin:5px 0;font-size:13px}
+.artifact-power{position:absolute;top:calc(var(--hud-top) + 80px);left:12px;max-width:210px;padding:7px 10px;border:1px solid #c8f6d8aa;border-radius:10px;background:#214653e8;color:#f4ffe9;font-size:11px;font-weight:800;pointer-events:none;z-index:4}
+#journal .side-quests{display:flex;margin-top:14px}
+#journal .side-quests button{white-space:normal;min-height:44px;font-size:10px}
+.final-mark img{width:170px;height:97px;object-fit:contain;display:block;margin:auto}
+#tracks{width:min(480px,calc(100% - 24px));padding:22px}
+#tracks .modal-head h2{font-size:26px;margin:0}
+#tracks .now-playing{margin:14px 0 12px;font-size:13px;color:#dcffb4}
+.music-buttons .secondary{padding:11px 7px;font-size:11px;min-height:44px}
+.music-volume{margin:14px 0 10px;gap:7px}
+.music-volume input{height:20px;margin:0}
+.track-scroller{max-height:34dvh;overflow-y:auto;overscroll-behavior:contain;border-block:1px solid #fff2}
+.track-scroller .music-section{font-size:12px;margin:14px 0 1px;color:#acc7e3}
+.track-scroller .track-row{padding:10px 0}
+.track-scroller .track-row button{min-height:44px}
+#tracks .upload-box{border:0;padding:0;margin:12px 0 0;background:transparent}
+#tracks .upload-box .primary{min-height:43px;font-size:11px;margin:0;justify-content:center}
+#tracks .upload-box p{font-size:10px;margin:9px 0 0}
+#districtMap{width:min(740px,calc(100% - 24px));padding:20px}
+#districtMap .modal-head h2{font-size:25px;margin:0}
+#mapFull{display:block;width:100%;height:auto;max-height:47dvh;object-fit:contain;border-radius:14px;margin-top:14px;background:#88b599}
+.map-legend{text-align:center;font-size:11px!important;margin:10px 0}
+.map-places{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.map-places button{padding:12px 10px;text-align:left;min-width:0;border:1px solid #b5d4ed80;background:#37536a;border-radius:11px;color:#fff;cursor:pointer}
+.map-places b{font-size:12px;display:block;line-height:1.4}
+.map-places small{display:block;font-size:10px;line-height:1.45;color:#d2e0e9;margin:8px 0}
+.map-places span{font-size:10px;color:#d4ff89}
+body[data-state=roam] .tip{display:none}
+button:focus-visible,a:focus-visible{outline:3px solid #c5ff8d;outline-offset:3px}
+@media(max-width:700px){
+ :root{--hud-top:calc(max(10px,env(safe-area-inset-top)) + 57px)}
+ header{left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));top:max(10px,env(safe-area-inset-top));gap:8px}
+ .logo img{width:clamp(42px,15vw,66px);height:44px}
+ .header-actions{gap:5px;min-width:0}
+ .header-actions #share{display:none}
+ .header-actions .icon{flex-shrink:0;width:44px;height:44px;font-size:20px;border-radius:12px}
+ .quick-player{height:44px;border-radius:12px;min-width:0}
+ .quick-player button{height:44px;min-width:44px;padding:0 6px}
+ .quick-player #nextMusic{min-width:44px}
+ .quick-player #musicOpen{width:clamp(40px,16vw,72px);min-width:40px;padding:0 3px}
+ #quickMusicName{font-size:9px}
+ .mission{left:10px;top:var(--hud-top);width:calc(100% - 102px);min-width:0;max-width:none;padding:6px 10px;border-radius:12px}
+ .mission-brief{min-height:33px}
+ .mission-brief .eyebrow{font-size:7px;letter-spacing:.8px;line-height:11px}
+ .mission-brief #objective{font-size:13px;line-height:19px;margin-top:2px}
+ .mission .counters{height:16px;margin-top:1px}
+ .mission .counters>span:not(.coin-icon):not(.score-mini),.mission #trackCount{display:none}
+ .mission .score-mini{margin-left:auto;font-size:9px}
+ .mission .score-mini b{font-size:11px}
+ .map-wrap{top:var(--hud-top);right:10px;width:76px;border-radius:12px}
+ .artifact-power{top:calc(var(--hud-top) + 66px);left:10px;max-width:calc(100% - 105px);font-size:10px;padding:5px 8px}
+ #map{width:74px;height:64px;display:block}
+ .map-wrap>span{font-size:7px;letter-spacing:.6px;padding:1px 0 4px}
+ .home{top:clamp(68px,18dvh,150px);left:22px;right:22px;max-height:calc(100dvh - clamp(68px,18dvh,150px) - max(12px,env(safe-area-inset-bottom)));overflow-y:auto;overscroll-behavior:contain;padding-bottom:6px}
+ .home h1{font-size:clamp(44px,12.5vw,65px);letter-spacing:-2px;margin:15px 0;line-height:1.02}
+ .home .lead{font-size:14px}
+ .home .features{gap:12px}
+ .home-foot{font-size:8px}
+ .world-actions{grid-template-columns:54px 54px;max-width:116px;gap:8px;right:max(13px,env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));padding:0}
+ .world-actions .action{grid-column:1/3;min-width:116px;max-width:116px;min-height:45px;padding:7px 8px;border-radius:12px}
+ .world-actions .action b{font-size:10px;line-height:1.25}
+ .world-actions .action small{display:none}
+ .world-actions .jump{height:54px;width:54px}
+ .world-actions #dash{grid-column:1;grid-row:2}
+ .world-actions #dance{grid-column:2;grid-row:2}
+ .world-actions #jump{grid-column:1;grid-row:3}
+ .world-actions #super{grid-column:2;grid-row:3}
+ .world-actions .stamina{width:116px;bottom:-9px}
+ .joystick{left:max(17px,env(safe-area-inset-left));bottom:calc(22px + env(safe-area-inset-bottom));width:104px;height:104px}
+ #stick{left:24px;top:24px}
+ .guide{left:70px;bottom:159px;padding:6px 9px;border-radius:11px;gap:5px}
+ .guide b{font-size:12px}.guide small{font-size:6px}.guide>span{font-size:24px}
+ .power-hud{right:13px;left:auto;bottom:198px;width:160px;max-width:47vw;padding:8px 10px}
+ .power-hud>small{display:none}.power-hud strong{font-size:11px}.power-hud>div{margin-top:5px}
+ .challenge-timer{top:calc(var(--hud-top) + 88px);bottom:auto;font-size:11px;padding:7px 12px}
+ .reward{top:calc(var(--hud-top) + 84px);width:auto;max-width:90vw;padding:10px 14px}
+ .reward strong{font-size:13px}.reward span{font-size:10px;line-height:1.4}
+ .toast{bottom:calc(max(22px,env(safe-area-inset-bottom)) + 174px);padding:8px 12px;font-size:10px;max-width:86vw;line-height:1.4}
+ .final-mark img{width:130px;height:74px}
+ .map-places{grid-template-columns:1fr}
+ .map-places button{display:grid;grid-template-columns:1fr auto;gap:3px 10px;padding:10px 12px;align-items:center}
+ .map-places small{grid-column:1/3;grid-row:2;margin:0;font-size:9px}
+ #districtMap{padding:16px}
+ #mapFull{max-height:37dvh}
+ #tracks{padding:18px}
+ .track-scroller{max-height:31dvh}
+}
+@media(max-height:550px) and (orientation:landscape){
+ :root{--hud-top:calc(max(8px,env(safe-area-inset-top)) + 46px)}
+ header{top:max(8px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));right:max(12px,env(safe-area-inset-right))}
+ .logo img{width:66px;height:38px}
+ .mission{top:var(--hud-top);width:225px;left:max(12px,env(safe-area-inset-left));max-width:225px;padding:5px 9px}
+ .mission-brief{min-height:34px}.mission-brief #objective{font-size:12px;line-height:16px}
+ .mission .counters{height:14px}
+ .mission .counters>span:not(.coin-icon):not(.score-mini),.mission #trackCount{display:none}
+ .map-wrap{top:var(--hud-top);width:64px;right:max(12px,env(safe-area-inset-right))}#map{width:62px;height:54px}
+ .home{top:68px;max-height:calc(100dvh - 80px - env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain}.home h1{font-size:46px;line-height:.98}.home .features{display:none}.home .looks{margin:9px 0}.home .primary{min-height:42px}
+ .world-actions{grid-template-columns:48px 48px;max-width:104px;gap:6px;bottom:calc(12px + env(safe-area-inset-bottom));right:max(13px,env(safe-area-inset-right))}
+ .world-actions .action{grid-column:1/3;min-width:104px;max-width:104px;min-height:34px}.world-actions .jump{width:48px;height:48px}.world-actions .stamina{width:104px}
+ .world-actions #dash{grid-column:1;grid-row:2}
+ .world-actions #dance{grid-column:2;grid-row:2}
+ .world-actions #jump{grid-column:1;grid-row:3}
+ .world-actions #super{grid-column:2;grid-row:3}
+ .joystick{bottom:calc(16px + env(safe-area-inset-bottom));left:max(20px,env(safe-area-inset-left));width:94px;height:94px}#stick{left:19px;top:19px}
+ .guide{bottom:21px;left:calc(max(20px,env(safe-area-inset-left)) + 160px)}
+ .power-hud{bottom:20px;right:142px;width:165px;max-width:25vw}
+ .challenge-timer{top:var(--hud-top);bottom:auto}
+ .toast{bottom:66px;max-width:48vw;font-size:9px}
+ .reward{top:calc(var(--hud-top) + 5px);max-width:45vw}
+ .map-places{grid-template-columns:repeat(3,1fr)}.map-places button{display:block}.map-places small{display:none}
+ #mapFull{max-height:42dvh}.track-scroller{max-height:27dvh}
+}
+
+#tracks .music-error{color:#ffe0aa;background:#7f352844;padding:10px;border-radius:9px;font-size:12px}
+.local-music-actions{display:flex;gap:8px;flex-wrap:wrap}
+.local-music-actions button{flex:1;min-height:44px;padding:10px}
+
+/* One compact play strip. Full controls are accessible from the pause menu. */
+.hud-menu{display:none}
+.pause-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.pause-tools .secondary{min-height:44px;padding:10px;font-size:12px}
+.joystick.engaged{border-color:#e6ffb4;background:#315c75b8}
+.joystick.engaged #stick{background:#e1ffae}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){
+ body[data-state=roam]{--play-top:max(10px,env(safe-area-inset-top));--play-left:max(10px,env(safe-area-inset-left));--play-right:max(10px,env(safe-area-inset-right))}
+ body[data-state=roam] header{display:none}
+ body[data-state=roam] .mission{left:var(--play-left);right:calc(var(--play-right) + 60px);top:var(--play-top);width:auto;min-width:0;max-width:420px;height:52px;box-sizing:border-box;padding:5px 9px;display:grid;grid-template-columns:49px minmax(0,1fr);gap:8px;border-radius:13px;background:#17394eeb;box-shadow:0 3px 14px #18354722}
+ body[data-state=roam] .mission-brief{grid-column:2;grid-row:1;min-height:40px;padding-right:13px;overflow:hidden}
+ body[data-state=roam] .mission-brief .eyebrow{font-size:7px;line-height:11px;letter-spacing:.4px}
+ body[data-state=roam] .mission-brief #objective{font-size:12px;line-height:18px;margin-top:2px}
+ body[data-state=roam] .mission-more{font-size:21px;top:9px}
+ body[data-state=roam] .mission .counters{grid-column:1;grid-row:1;align-self:center;display:flex;gap:3px;margin:0;height:30px;border-right:1px solid #bfd7e244;padding-right:6px}
+ body[data-state=roam] .counters>span:not(.coin-icon),body[data-state=roam] #trackCount,body[data-state=roam] #tracksButton{display:none}
+ body[data-state=roam] .counters .coin-icon{font-size:17px;color:#ffe4a2}
+ body[data-state=roam] #coinCount{font-size:13px;font-variant-numeric:tabular-nums}
+ body[data-state=roam] .hud-menu{display:grid;place-items:center;position:absolute;pointer-events:auto;right:var(--play-right);top:var(--play-top);width:52px;height:52px;border:1px solid #c9dce580;border-radius:13px;background:#17394eeb;color:#eff8dd;font-size:25px;touch-action:manipulation}
+ body[data-state=roam] .map-wrap{top:calc(var(--play-top) + 62px);right:var(--play-right);width:44px;height:44px;border-radius:12px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+ body[data-state=roam] .map-wrap::before{content:'⌖';font-size:23px;line-height:25px;color:#e7f7d2}
+ body[data-state=roam] #map{display:none}
+ body[data-state=roam] .map-wrap>span{font-size:6px;padding:0;letter-spacing:0}
+body[data-state=roam] .joystick{display:block;width:124px;height:124px;box-sizing:border-box;left:max(18px,env(safe-area-inset-left));bottom:calc(24px + env(safe-area-inset-bottom));user-select:none;-webkit-user-select:none;touch-action:none}
+ body[data-state=roam] #stick{left:calc(50% - 27px);top:calc(50% - 27px);width:54px;height:54px;box-sizing:border-box;pointer-events:none}
+ body[data-state=roam] .world-actions{grid-template-columns:60px 60px;gap:8px;max-width:128px;right:max(14px,env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));padding:0}
+ body[data-state=roam] .world-actions .action{grid-column:1/3;min-width:128px;max-width:128px;min-height:44px;padding:7px 8px}
+ body[data-state=roam] .world-actions .action small{display:none}
+ body[data-state=roam] .world-actions .jump{width:60px;height:60px;touch-action:none;user-select:none;-webkit-user-select:none}
+ body[data-state=roam] .world-actions #dash{grid-column:1;grid-row:2}
+ body[data-state=roam] .world-actions #dance{grid-column:2;grid-row:2}
+ body[data-state=roam] .world-actions #jump{grid-column:1;grid-row:3;border-color:#e5ffc0;background:#395e68}
+ body[data-state=roam] .world-actions #super{grid-column:2;grid-row:3}
+ body[data-state=roam] .world-actions .stamina{width:128px;bottom:-9px}
+ body[data-state=roam] .guide{left:80px;bottom:calc(166px + env(safe-area-inset-bottom));padding:6px 10px;max-width:115px}
+ body[data-state=roam] .power-hud{bottom:calc(217px + env(safe-area-inset-bottom));right:14px;left:auto;transform:none;width:154px;max-width:47vw;padding:7px 9px}
+ body[data-state=roam] .power-hud small{display:none}
+ body[data-state=roam] .power-hud strong{font-size:11px}
+ body[data-state=roam] .challenge-timer{top:calc(var(--play-top) + 64px);bottom:auto;padding:7px 10px;font-size:11px;max-width:calc(100% - 128px)}
+ body[data-state=roam] .reward{top:calc(var(--play-top) + 64px);max-width:calc(100% - 100px);width:auto;padding:9px 12px}
+ body[data-state=roam] .reward strong{font-size:12px}
+ body[data-state=roam] .toast{bottom:calc(218px + env(safe-area-inset-bottom));font-size:10px;max-width:86vw}
+}
+@media(max-height:500px) and (orientation:landscape){
+ body[data-state=roam] .mission{max-width:340px}
+ body[data-state=roam] .joystick{width:108px;height:108px;bottom:calc(18px + env(safe-area-inset-bottom))}
+ body[data-state=roam] .world-actions{grid-template-columns:54px 54px;gap:6px;max-width:114px;bottom:calc(16px + env(safe-area-inset-bottom))}
+ body[data-state=roam] .world-actions .action{min-width:114px;max-width:114px;min-height:44px}
+ body[data-state=roam] .world-actions .jump{width:54px;height:54px}
+ body[data-state=roam] .world-actions .stamina{width:114px}
+ body[data-state=roam] .guide{left:174px;bottom:24px}
+ body[data-state=roam] .power-hud{right:146px;bottom:22px;width:150px;max-width:24vw}
+ body[data-state=roam] .toast{bottom:70px;max-width:48vw}
+}
+
+/* On the board only two actions are needed; S / stick down is the brake. */
+body[data-mode=skate] .world-actions #dash,body[data-mode=skate] .world-actions #dance,body[data-mode=skate] .world-actions #super,body[data-mode=skate] .world-actions .stamina{display:none}
+body[data-mode=skate] .world-actions #jump{grid-column:1/3;grid-row:2;justify-self:end}
+
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){
+ body[data-mode=skate] .power-hud{bottom:calc(150px + env(safe-area-inset-bottom));width:128px}
+}
+@media(max-height:500px) and (orientation:landscape){
+ body[data-mode=skate] .power-hud{bottom:22px;width:150px}
+}
+
+.challenge-start{position:fixed;z-index:6;left:34px;top:230px;padding:12px 16px;min-height:44px;border:1px solid #d6efad;border-radius:12px;color:#23384b;background:#c6ed91;font-size:12px;font-weight:bold;touch-action:manipulation}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){.challenge-start{left:max(10px,env(safe-area-inset-left));top:calc(max(10px,env(safe-area-inset-top)) + 64px);max-width:calc(100% - 86px);font-size:11px;padding:10px 12px}}
+
+/* Mission status stays beneath the compact HUD, away from thumb controls. */
+.mission-tools{position:fixed;z-index:5;left:34px;top:230px;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 100px);padding:4px 8px;background:#28445bea;border-radius:12px;color:#eff8dc;font-size:12px}
+.mission-tools button{min-height:44px;padding:6px 10px;border-radius:9px;background:#caee98;color:#20394d}
+.music-missions p{font-size:13px;line-height:1.45}.music-missions button{margin-top:6px;white-space:normal}
+#missionResult,#artifactResult,#vehicleCourseResult{max-width:440px;width:calc(100% - 32px)}#missionResult button,#artifactResult button,#vehicleCourseResult button{margin-top:10px}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){.mission-tools{left:10px;top:74px;font-size:11px;gap:6px}.mission-tools button{font-size:11px}}
+
+.trick-control{display:none}body[data-mode=skate] #skateTrick,body[data-mode=skate] #trickChoice{display:block}
+body[data-mode=skate] .world-actions #trickChoice{grid-column:1/3;grid-row:2;min-height:44px;width:100%;max-width:128px;border-radius:10px;background:#2b465c;color:#eaffc9;border:1px solid #abcbb8;padding:6px;font:inherit;font-size:12px}
+body[data-mode=skate] .world-actions #skateTrick{grid-column:1;grid-row:3}
+body[data-mode=skate] .world-actions #jump{grid-column:2;grid-row:3}
+.style-hud{position:fixed;left:34px;top:296px;z-index:5;display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:245px;padding:8px 10px;border-radius:11px;background:#28445bea;color:#e9faca;font-size:12px;pointer-events:none}
+.style-hud b{color:#d9ff88}.style-hud small{font-size:10px;opacity:.8}#stylePending{color:#e2c3ff}
+.trick-notice{position:fixed;z-index:5;left:50%;top:24%;transform:translateX(-50%);max-width:80vw;border-radius:12px;padding:8px 12px;background:#2a3f56dc;color:#e7ffa6;font-weight:bold;font-size:14px;text-align:center;pointer-events:none}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){.style-hud{left:10px;top:132px;max-width:220px;font-size:11px;padding:6px 8px}.trick-notice{top:26%;font-size:12px}body[data-mode=skate] .power-hud{bottom:calc(212px + env(safe-area-inset-bottom))}}
+@media(max-height:500px) and (orientation:landscape){body[data-mode=skate] .power-hud{bottom:22px;right:150px}.style-hud{top:132px}.trick-notice{top:20%;max-width:38vw}}
+/* One glance at the story stage; the bar stays inside the existing compact HUD. */
+.story-progress{height:5px;margin:7px 0 2px;border-radius:9px;background:#a8c6b455;overflow:hidden}
+.story-progress i{display:block;height:100%;width:0;background:#d4ff89;transition:width .3s ease}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){body[data-state=roam] .story-progress{position:absolute;left:67px;right:12px;bottom:2px;height:3px;margin:0}}
+.story-final p{font-size:12px;line-height:1.45;color:#e5f1dd}
+.story-final #storyTotal{font-size:21px;font-weight:800;color:#d4ff89}
+.story-final .final-links{display:flex;gap:8px}
+@media(max-width:700px){.story-final{max-height:calc(100dvh - 24px);overflow:auto}.story-final h2{font-size:clamp(30px,9vw,42px)}.story-final p{font-size:11px}.story-final #storyTotal{font-size:17px}.story-final .final-links{flex-wrap:wrap}.mission #objectiveHint{display:none}}
+
+/* The same street-arcade palette carries menu, play strip and rewards. */
+:root{--arcade-navy:#1d3448;--arcade-mint:#d4ff89;--arcade-violet:#c7a8ed;--arcade-stroke:#d7e9d46b}
+.home .eyebrow,.panel .eyebrow,.mission .eyebrow{color:var(--arcade-mint)}
+.home .primary,.panel .primary{background:linear-gradient(135deg,#dfff9d,#bcea79);box-shadow:0 5px 0 #6c90536e,0 12px 32px #10253345}
+.home .looks button.selected{background:#d5ff8a2b;box-shadow:inset 0 0 0 1px #d4ff8970}
+.mission,.hud-menu,.map-wrap,.quick-player,.panel,dialog{border-color:var(--arcade-stroke);background-color:#1d3448eb}
+.mission,.hud-menu,.map-wrap{box-shadow:0 8px 22px #10253636}
+.panel,dialog{box-shadow:0 22px 72px #0c1d2e91}
+.reward{background:linear-gradient(120deg,#244d50f5,#3a5066f5);border-color:#d8ff9c;box-shadow:0 10px 32px #0a24317a}
+.story-progress i,.battle-bottom i,.power-hud i{background:linear-gradient(90deg,var(--arcade-mint),var(--arcade-violet))}
+#tracks .upload-box{border:1px dashed #d4ff8990;border-radius:12px;padding:12px;background:#d4ff890d}
+#tracks .upload-box p{color:#ecf5dc}
+body[data-quality=low] .vignette{background:linear-gradient(90deg,#111a295e,transparent 70%)}
+body[data-quality=low] .mission,body[data-quality=low] .hud-menu,body[data-quality=low] .map-wrap,body[data-quality=low] .panel,body[data-quality=low] dialog{backdrop-filter:none;box-shadow:none}
+body[data-quality=low] .story-progress i{transition:none}
+
+.map-places .fast-travel{border-color:#d4ff89;background:#304f55}.map-places .fast-travel b{color:#d4ff89}
+
+/* Panoramic map keeps streets proportional on narrow screens. */
+.map-viewport{overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;touch-action:pan-x pan-y;border-radius:14px;margin-top:12px}
+#districtMap #mapFull{width:2200px;min-width:2200px;height:360px;max-height:none;max-width:none;margin:0;border-radius:0}
+.map-focus{display:flex;gap:8px;margin-top:10px}.map-focus button{min-height:44px;flex:1}
+@media(max-height:500px){#districtMap #mapFull{width:1320px;min-width:1320px;height:216px}}
+
+#districtMap .modal-head{position:sticky;top:-20px;z-index:4;background:#1c242c;padding:12px 0}
+@media(max-width:700px){#districtMap .modal-head{top:-16px}}
