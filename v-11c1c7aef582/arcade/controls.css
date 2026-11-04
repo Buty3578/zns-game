@@ -1,0 +1,109 @@
+/* Named touch controls share the exact same commands as physical keyboard keys. */
+body[data-state=roam] .world-actions{display:flex;flex-wrap:wrap;align-items:stretch;width:152px;max-width:152px;gap:8px;right:max(14px,env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom))}
+body[data-state=roam] .world-actions button{flex:0 0 72px;width:72px;height:54px;min-width:0;max-width:72px;min-height:54px;padding:5px;border-radius:13px;font-size:13px;font-weight:700;border:1px solid #d9e8c980;background:#254354ed;color:#f1f9e7;touch-action:none}
+body[data-state=roam] .world-actions button small{display:block;font-size:8px;line-height:1.25;margin-top:3px;letter-spacing:0}
+body[data-state=roam] .world-actions #interact{flex-basis:152px;width:152px;max-width:152px;order:0;height:auto;min-height:44px;background:#d4ff89;color:#20384a}
+body[data-state=roam] .world-actions #interact b{color:inherit;font-size:12px;letter-spacing:0}
+body[data-state=roam] .world-actions #interact small{display:block;font-size:9px}
+body[data-state=roam] .world-actions #boardButton,body[data-state=roam] .world-actions #exitButton{order:1;border-color:#d4ff89}
+body[data-state=roam] .world-actions #dash,body[data-state=roam] .world-actions #brakeButton{order:2}
+body[data-state=roam] .world-actions #jump{order:3;font-size:23px;background:#355b68}
+body[data-state=roam] .world-actions #dashBurst,body[data-state=roam] .world-actions #skateTrick{order:4}
+body[data-state=roam] .world-actions #dance{order:5;font-size:23px}
+body[data-state=roam] .world-actions #super{order:6;display:block;font-size:23px}
+body[data-state=roam] .world-actions #trickChoice{order:0;flex:0 0 152px;max-width:152px;width:152px;min-height:44px;font-size:12px}
+body[data-state=roam] .world-actions button:disabled{opacity:.4}
+body[data-state=roam] .world-actions .stamina{width:152px}
+body[data-mode=vehicle] .world-actions #dance{display:none}
+.controls-help{position:absolute;right:35px;top:270px;width:44px;height:44px;border:1px solid #c5dccf88;border-radius:12px;background:#1d3448ed;color:#f1f9df;font-size:22px;pointer-events:auto}
+#controls{width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain}
+#controls p{font-size:12px;line-height:1.5;color:#d5e6df}
+.control-row{display:grid;grid-template-columns:155px 1fr;gap:12px;align-items:center;padding:9px 0;border-top:1px solid #ffffff20;font-size:12px;line-height:1.4}
+.control-row kbd{color:#d4ff89;font:700 12px Arial,sans-serif}
+.stick-hint{position:absolute;top:100%;left:-5%;width:110%;margin-top:5px;text-align:center;font-size:9px;line-height:1.35;color:#f5ffe7;pointer-events:none;text-shadow:0 1px 4px #142333}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){
+ .controls-help{right:max(10px,env(safe-area-inset-right));top:124px}
+ .desktop-copy{display:none}.mobile-copy{display:inline}
+ .control-row{grid-template-columns:96px 1fr;gap:8px;font-size:11px}.control-row kbd{font-size:11px}
+ body[data-state=roam] .world-actions{bottom:calc(22px + env(safe-area-inset-bottom))}
+ body[data-mode=skate] .power-hud{display:none}
+ body[data-state=roam] .guide{bottom:175px;left:72px}
+}
+@media(max-width:359px){body[data-state=roam] .world-actions{right:8px;width:140px;max-width:140px;gap:6px}body[data-state=roam] .world-actions button{flex-basis:67px;width:67px;max-width:67px}body[data-state=roam] .world-actions #interact,body[data-state=roam] .world-actions #trickChoice{flex-basis:140px;max-width:140px;width:140px}body[data-state=roam] .joystick{left:12px;width:108px;height:108px}}
+@media(max-height:500px) and (orientation:landscape){
+ body[data-state=roam] .world-actions{bottom:12px;width:216px;max-width:216px;gap:6px}
+ body[data-state=roam] .world-actions button{flex-basis:68px;width:68px;max-width:68px;height:44px;min-height:44px}
+ body[data-state=roam] .world-actions #interact,body[data-state=roam] .world-actions #trickChoice{flex-basis:216px;width:216px;max-width:216px;min-height:44px}
+ body[data-state=roam] .guide{bottom:22px;left:205px}.controls-help{top:10px;right:72px}
+ body[data-mode=skate] .style-hud{top:132px;max-width:170px}
+}
+
+.fps-hud{position:fixed;bottom:3px;left:8px;z-index:4;background:#172c40dc;padding:3px 6px;border-radius:4px;font-size:10px;color:#dfffbb;pointer-events:none}
+
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){body[data-state=roam] .joystick{bottom:calc(42px + env(safe-area-inset-bottom))}}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){body[data-state=roam] .desktop-help{display:none}}
+
+.skate-guide{position:absolute;right:max(14px,env(safe-area-inset-right));bottom:calc(272px + env(safe-area-inset-bottom));z-index:3;width:185px;padding:7px 9px;border-radius:10px;background:#1b3447d9;color:#effadf;font:700 9px/1.45 Arial,sans-serif;letter-spacing:.15px;text-align:center;pointer-events:none}
+@media(max-width:700px),(pointer:coarse){.skate-guide{bottom:calc(221px + env(safe-area-inset-bottom));width:152px;font-size:8px}}
+@media(max-height:500px) and (orientation:landscape){.skate-guide{right:240px;bottom:15px;width:175px;font-size:8px}}
+
+.environment-status{position:fixed;top:calc(80px + env(safe-area-inset-top));right:16px;z-index:4;padding:5px 8px;border:1px solid #ffffff28;border-radius:6px;background:#111a29a8;color:#e5e9e4;font-size:10px;letter-spacing:.5px;pointer-events:none}body[data-quality="low"] .environment-status{backdrop-filter:none}@media(max-width:700px){.environment-status{top:calc(54px + env(safe-area-inset-top));right:10px;font-size:9px;padding:4px 6px}}
+
+@media(max-width:700px),(pointer:coarse),(max-height:550px) and (orientation:landscape){#missionOpen{min-height:44px}}
+
+/* Independent thumb zones: floating movement left, camera drag right. */
+.move-zone,#mobileMore{display:none}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){
+ body[data-state=roam] .move-zone{display:block;position:fixed;left:0;bottom:0;width:44vw;height:44dvh;z-index:6;pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+ body[data-state=roam] .joystick{position:fixed;pointer-events:none;z-index:7;width:118px;height:118px;left:max(24px,env(safe-area-inset-left));bottom:calc(36px + env(safe-area-inset-bottom));border:2px solid #e6f2ed66;background:#263e5148;box-shadow:none;opacity:.65}
+ body[data-state=roam] .joystick.engaged{opacity:1;background:#253e516b;border-color:#e2f4dba8}
+ body[data-state=roam] .joystick #stick{background:#ecf4e3c9;border:2px solid #fff9;box-shadow:none}
+ body[data-state=roam] .stick-hint{display:none}
+ body[data-state=roam] .world-actions{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(32px + env(safe-area-inset-bottom));width:202px;max-width:202px;height:176px;display:block;pointer-events:none;padding:0;z-index:8}
+ body[data-state=roam] .world-actions button,body[data-state=roam] .world-actions #trickChoice{position:absolute;pointer-events:auto;min-width:0;max-width:none;margin:0;touch-action:none;flex:none;border:1px solid #e8f0e09c;background:#243e52b8;box-shadow:none;user-select:none;-webkit-user-select:none}
+ body[data-state=roam] .world-actions button small{font-size:9px;display:block;letter-spacing:0}
+ body[data-state=roam] .world-actions #jump{display:block;right:0;bottom:0;width:78px;max-width:78px;height:78px;min-height:78px;border-radius:50%;font-size:32px;border:2px solid #e9f0e3bb;background:#38586e8c}
+ body[data-state=roam] .world-actions #boardButton{right:96px;bottom:8px;width:62px;max-width:62px;height:62px;min-height:62px;border-radius:50%;font-size:12px}
+ body[data-state=roam] .world-actions #mobileMore{display:block;right:0;bottom:94px;width:46px;max-width:46px;height:46px;min-height:46px;border-radius:50%;font-size:23px;padding:1px}
+ body[data-state=roam] .world-actions #mobileMore small{font-size:7px;margin-top:0}
+ body[data-state=roam] .world-actions #interact{right:0;bottom:155px;width:202px;max-width:202px;min-width:0;min-height:44px;height:auto;border-radius:14px;padding:8px;background:#d4ff89;color:#1e3647}
+ body[data-state=roam] .world-actions #interact small{display:none}
+ body[data-state=roam] .world-actions #dash,body[data-state=roam] .world-actions #dashBurst,body[data-state=roam] .world-actions #dance,body[data-state=roam] .world-actions #super{display:none;width:54px;max-width:54px;height:54px;min-height:54px;border-radius:14px;font-size:21px}
+ body[data-state=roam] .world-actions.expanded::before{content:'';position:absolute;right:55px;bottom:82px;width:135px;height:144px;border:1px solid #c3d8d575;border-radius:15px;background:#182f43ed;pointer-events:none}
+ body[data-state=roam] .world-actions.expanded #dash{display:block;right:64px;bottom:162px}
+ body[data-state=roam] .world-actions.expanded #dashBurst{display:block;right:128px;bottom:162px}
+ body[data-state=roam] .world-actions.expanded #dance{display:block;right:64px;bottom:98px}
+ body[data-state=roam] .world-actions.expanded #super:not(:disabled){display:block;right:128px;bottom:98px}
+ body[data-state=roam] .world-actions.expanded #interact{bottom:235px}
+ body[data-state=roam] .world-actions .stamina{display:none}
+ body[data-mode=skate] .world-actions #skateTrick{display:block;right:94px;bottom:8px;width:66px;max-width:66px;height:66px;min-height:66px;border-radius:50%;font-size:26px}
+ body[data-mode=skate] .world-actions #skateTrick small{font-size:8px}
+ body[data-mode=skate] .world-actions #brakeButton{display:block;right:0;bottom:94px;width:68px;max-width:68px;height:46px;min-height:46px;border-radius:12px;font-size:11px}
+ body[data-mode=skate] .world-actions #exitButton{display:block;right:80px;bottom:94px;width:65px;max-width:65px;height:46px;min-height:46px;border-radius:12px;font-size:11px}
+ body[data-mode=skate] .world-actions #mobileMore{right:157px;bottom:94px;width:40px;max-width:40px;height:40px;min-height:40px}
+ body[data-mode=skate] .world-actions #trickChoice{display:block;left:auto;right:0;bottom:156px;max-width:202px;width:202px;height:44px;min-height:44px;background:#243e52df}
+ body[data-mode=skate] .world-actions.expanded #dash,body[data-mode=skate] .world-actions.expanded #dashBurst,body[data-mode=skate] .world-actions.expanded #dance{display:none}
+ body[data-mode=skate] .world-actions.expanded #super{right:72px;bottom:216px}
+ body[data-mode=skate] .world-actions.expanded::before{right:60px;bottom:205px;width:78px;height:78px}
+ body[data-mode=vehicle] .world-actions #jump,body[data-mode=vehicle] .world-actions #dance,body[data-mode=vehicle] .world-actions #dashBurst{display:none}
+ body[data-mode=vehicle] .world-actions #brakeButton{display:block;right:0;bottom:0;width:78px;max-width:78px;height:78px;min-height:78px;border-radius:50%;font-size:12px}
+ body[data-mode=vehicle] .world-actions #exitButton{display:block;right:94px;bottom:8px;width:65px;max-width:65px;height:60px;min-height:60px;border-radius:14px;font-size:12px}
+ body[data-state=roam] .guide{left:12px;bottom:auto;top:142px;max-width:156px}
+ body[data-state=roam] .world-actions .hidden{display:none!important}
+}
+@media(max-height:500px) and (orientation:landscape){
+ body[data-state=roam] .move-zone{height:65dvh;width:42vw}
+ body[data-state=roam] .joystick{width:104px;height:104px;bottom:20px}
+ body[data-state=roam] .world-actions{bottom:14px;right:20px}
+ body[data-state=roam] .world-actions #jump{width:68px;max-width:68px;height:68px;min-height:68px}
+ body[data-state=roam] .guide{top:124px;max-width:140px}
+}
+
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){body[data-state=roam] .world-actions #boardButton small,body[data-state=roam] .world-actions #brakeButton small{display:none}}
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){body[data-state=roam] .guide{transform:none}body[data-state=roam] .world-actions.expanded #dashBurst{font-size:12px}body[data-state=roam] .world-actions #dashBurst small{display:none}}
+
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){body[data-state=roam] .skate-guide{display:none}body[data-state=roam] .toast{top:calc(max(10px,env(safe-area-inset-top)) + 70px);bottom:auto;left:50%;width:max-content;max-width:calc(100vw - 48px);font-size:11px;line-height:1.4;padding:8px 12px}}
+
+.nitro-track{display:block;width:100%;height:4px;background:#243e52;border-radius:4px;overflow:hidden;margin-top:5px}.nitro-track i{display:block;height:100%;background:#6be9e3;width:60%}#nitroButton.boosting{box-shadow:0 0 16px #60dbe9}body[data-mode=vehicle] #nitroButton{display:flex;flex-direction:column;justify-content:center}body[data-mode=vehicle] #nitroButton.hidden{display:none}
+
+@media(max-width:700px),(pointer:coarse),(max-height:500px) and (orientation:landscape){body[data-mode=vehicle] .world-actions #nitroButton{display:flex;right:0;bottom:96px;width:78px;max-width:78px;height:62px;min-height:62px;border-radius:14px;font-size:12px}body[data-mode=vehicle] .world-actions #nitroButton small{display:none}body[data-mode=vehicle] .world-actions #mobileMore{right:114px;bottom:96px}}

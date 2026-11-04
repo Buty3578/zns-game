@@ -1,0 +1,25 @@
+/* Rhythm UI: world and dancer remain visible above the touch lanes. */
+.battle-score b{font-size:21px}.result-stats{gap:24px}.result-stats b{font-size:24px}
+body[data-battle-kind=floor] .battle-power{display:none}
+body[data-state=battle] .quick-player,body[data-state=battle] #share{display:none}
+body[data-state=battle] .toast{top:76px;bottom:auto;pointer-events:none}
+.battle-keys{left:0;right:0;gap:6px;height:56px;bottom:6px;padding:0 4px}
+.battle-keys button{min-width:44px;min-height:48px;user-select:none}
+body[data-battle-kind=floor] .battle{top:100px}
+@media(max-width:700px){
+ body[data-battle-kind=floor] .battle{left:10px;right:10px;top:auto;bottom:calc(8px + env(safe-area-inset-bottom));width:auto;padding:10px 12px}
+ body[data-battle-kind=floor] .battle-title h2{font-size:16px;margin:4px 0}
+ body[data-battle-kind=floor] .battle-track{height:clamp(190px,32dvh,290px);min-height:190px}
+ body[data-battle-kind=floor] .battle-rule{font-size:10px;min-height:0;margin:5px 0 8px}
+ body[data-battle-kind=floor] .battle-bottom{margin-top:8px}
+ body[data-state=battle] .header-actions{margin-left:auto}
+ .result-stats{gap:20px}#result .panel{padding:20px}#result .record-disc{display:none}
+}
+@media(max-height:550px) and (orientation:landscape){
+ body[data-battle-kind=floor] .battle{left:auto;right:12px;top:68px;bottom:8px;width:min(48vw,410px);padding:8px;display:flex;flex-direction:column}
+ body[data-battle-kind=floor] .battle-title h2{font-size:14px;margin:3px 0}
+ body[data-battle-kind=floor] .battle-rule{display:none}
+ body[data-battle-kind=floor] .battle-track{height:auto;min-height:140px;flex:1}
+ body[data-battle-kind=floor] .battle-bottom{margin-top:6px}
+ #result .panel{padding:14px}#result .record-disc{display:none}#result h2{margin:10px 0}#result h3{margin:0 0 8px}#result .result-stats{margin:8px 0}#result p{margin:7px 0}#result button{min-height:42px;padding:10px;margin-top:6px}
+}
