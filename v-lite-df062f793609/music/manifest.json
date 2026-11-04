@@ -1,0 +1,29 @@
+[
+  {
+    "track": 0,
+    "bpm": 95,
+    "duration": 82.84210526315789,
+    "style": "energetic boom-bap / ghost snares",
+    "peak_dbfs": -2.69,
+    "rms_dbfs": -15.17,
+    "bytes": 1658297
+  },
+  {
+    "track": 1,
+    "bpm": 110,
+    "duration": 80.54545454545453,
+    "style": "street breaks / syncopated bass",
+    "peak_dbfs": -2.69,
+    "rms_dbfs": -15.1,
+    "bytes": 1612321
+  },
+  {
+    "track": 2,
+    "bpm": 125,
+    "duration": 78.8,
+    "style": "up-tempo hip-hop / scratch fills",
+    "peak_dbfs": -2.69,
+    "rms_dbfs": -14.14,
+    "bytes": 1577317
+  }
+]
